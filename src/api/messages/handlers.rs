@@ -7,6 +7,7 @@ use crate::{extractors::Claims, types::ErrorMessage};
 
 use super::types::Message;
 
+#[utoipa::path()]
 #[get("/admin")]
 pub async fn admin(claims: Claims) -> impl Responder {
     if claims.validate_permissions(&HashSet::from(["read:admin-messages".to_string()])) {
@@ -14,7 +15,7 @@ pub async fn admin(claims: Claims) -> impl Responder {
             api: "api_actix-web_rust_hello-world".to_string(),
             branch: "basic-role-based-access-control".to_string(),
             text: "The secured API requires a valid access token and the read:admin-messages permission to share this admin message.".to_string(),
-        }))/**/
+        }))
     } else {
         Err(ErrorForbidden(ErrorMessage {
             error: Some("insufficient_permissions".to_string()),
@@ -24,6 +25,7 @@ pub async fn admin(claims: Claims) -> impl Responder {
     }
 }
 
+#[utoipa::path()]
 #[get("/protected")]
 pub async fn protected(_claims: Claims) -> impl Responder {
     web::Json(Message {
@@ -33,6 +35,7 @@ pub async fn protected(_claims: Claims) -> impl Responder {
     })
 }
 
+#[utoipa::path()]
 #[get("/public")]
 pub async fn public() -> impl Responder {
         web::Json(Message {

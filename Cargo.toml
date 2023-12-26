@@ -17,11 +17,13 @@ rust-version = "1.56"
 actix-cors = "0.6.5"
 actix-web = { version = "4.4.1", features = ["rustls"] }
 actix-web-httpauth = "0.8.1"
-awc = { version = "3.3.0" ,features = ["openssl"]}
+awc = { version = "3.3.0", features = ["openssl"] }
 dotenv = "^0.15.0"
 env_logger = "0.10.1"
 envy = "^0.4.2"
 jsonwebtoken = "9.2.0"
-serde = { version = "^1.0.130" ,features = ["derive"] }
+serde = { version = "^1.0.130", features = ["derive"] }
 thiserror = "1.0.52"
+utoipa = { version = "4.1.0", features = ["actix_extras"] }
+utoipa-redoc = { version = "2.0.0", features = ["actix-web"] }
 

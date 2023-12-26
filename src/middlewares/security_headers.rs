@@ -9,10 +9,11 @@ pub fn security_headers() -> DefaultHeaders {
         ))
         .add((header::X_FRAME_OPTIONS, "deny"))
         .add((header::X_CONTENT_TYPE_OPTIONS, "nosniff"))
-        .add((
+        // Uncomment this for production
+        /*.add((
             header::CONTENT_SECURITY_POLICY,
-            "default-src 'self'; frame-ancestors 'none';",
-        ))
+            "default-src 'self'; frame-ancestors 'none'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; script-src 'self' https://cdn.redoc.ly 'unsafe-inline'; worker-src 'self' blob;",
+        ))*/
         .add((
             header::CACHE_CONTROL,
             "no-cache, no-store, max-age=0, must-revalidate",

@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize)]
@@ -12,11 +13,17 @@ impl Default for Config {
     }
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Debug, thiserror::Error)]
 pub struct ErrorMessage {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub error: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub error_description: Option<String>,
     pub message: String,
+}
+
+impl Display for ErrorMessage {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.message)
+    }
 }

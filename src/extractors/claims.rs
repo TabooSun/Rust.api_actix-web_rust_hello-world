@@ -1,21 +1,21 @@
-use crate::types::ErrorMessage;
+use std::{collections::HashSet, future::Future, pin::Pin};
+
 use actix_web::{
-    client::Client,
+    Error,
     error::ResponseError,
-    http::{StatusCode, Uri},
-    Error, FromRequest, HttpResponse,
+    FromRequest, http::{StatusCode, Uri}, HttpResponse,
 };
 use actix_web_httpauth::{
     extractors::bearer::BearerAuth, headers::www_authenticate::bearer::Bearer,
 };
-use derive_more::Display;
 use jsonwebtoken::{
-    decode, decode_header,
-    jwk::{AlgorithmParameters, JwkSet},
-    Algorithm, DecodingKey, Validation,
+    Algorithm, decode,
+    decode_header,
+    DecodingKey, jwk::{AlgorithmParameters, JwkSet}, Validation,
 };
 use serde::Deserialize;
-use std::{collections::HashSet, future::Future, pin::Pin};
+
+use crate::types::ErrorMessage;
 
 #[derive(Clone, Deserialize)]
 pub struct Auth0Config {
@@ -31,19 +31,27 @@ impl Default for Auth0Config {
     }
 }
 
-#[derive(Debug, Display)]
+#[derive(Debug, thiserror::Error)]
 enum ClientError {
-    #[display(fmt = "authentication")]
-    Authentication(actix_web_httpauth::extractors::AuthenticationError<Bearer>),
-    #[display(fmt = "decode")]
-    Decode(jsonwebtoken::errors::Error),
-    #[display(fmt = "not_found")]
+    #[error("authentication")]
+    Authentication(#[from] actix_web_httpauth::extractors::AuthenticationError<Bearer>),
+    #[error("decode")]
+    Decode(#[from] jsonwebtoken::errors::Error),
+    #[error("not_found")]
     NotFound(String),
-    #[display(fmt = "unsupported_algorithm")]
-    UnsupportedAlgortithm(AlgorithmParameters),
+    #[error("unsupported_algorithm")]
+    UnsupportedAlgorithm(AlgorithmParameters),
+    #[error("Get jwks.json error")]
+    RequestJwksError(awc::error::SendRequestError),
+    #[error("Parse jwks.json error")]
+    ParseJwksError(awc::error::JsonPayloadError),
 }
 
 impl ResponseError for ClientError {
+    fn status_code(&self) -> StatusCode {
+        StatusCode::UNAUTHORIZED
+    }
+
     fn error_response(&self) -> HttpResponse {
         match self {
             Self::Authentication(_) => HttpResponse::Unauthorized().json(ErrorMessage {
@@ -64,19 +72,25 @@ impl ResponseError for ClientError {
                 error_description: Some(msg.to_string()),
                 message: "Bad credentials".to_string(),
             }),
-            Self::UnsupportedAlgortithm(alg) => HttpResponse::Unauthorized().json(ErrorMessage {
+            Self::UnsupportedAlgorithm(alg) => HttpResponse::Unauthorized().json(ErrorMessage {
                 error: Some("invalid_token".to_string()),
                 error_description: Some(format!(
-                    "Unsupported encryption algortithm expected RSA got {:?}",
+                    "Unsupported encryption algorithm expected RSA got {:?}",
                     alg
                 )),
                 message: "Bad credentials".to_string(),
             }),
+            ClientError::RequestJwksError(_) => HttpResponse::Unauthorized().json(ErrorMessage {
+                error: Some("invalid_token".to_string()),
+                error_description: Some("Failed to get jwks.json".to_string()),
+                message: "Bad credentials".to_string(),
+            }),
+            ClientError::ParseJwksError(_) => HttpResponse::Unauthorized().json(ErrorMessage {
+                error: Some("invalid_token".to_string()),
+                error_description: Some("Failed to parse jwks.json".to_string()),
+                message: "Bad credentials".to_string(),
+            }),
         }
-    }
-
-    fn status_code(&self) -> StatusCode {
-        StatusCode::UNAUTHORIZED
     }
 }
 
@@ -93,8 +107,7 @@ impl Claims {
 
 impl FromRequest for Claims {
     type Error = Error;
-    type Future = Pin<Box<dyn Future<Output = Result<Self, Self::Error>>>>;
-    type Config = ();
+    type Future = Pin<Box<dyn Future<Output=Result<Self, Self::Error>>>>;
 
     fn from_request(
         req: &actix_web::HttpRequest,
@@ -103,14 +116,14 @@ impl FromRequest for Claims {
         let config = req.app_data::<Auth0Config>().unwrap().clone();
         let extractor = BearerAuth::extract(req);
         Box::pin(async move {
-            let credentials = extractor.await.map_err(ClientError::Authentication)?;
+            let credentials = extractor.await?;
             let token = credentials.token();
             let header = decode_header(token).map_err(ClientError::Decode)?;
             let kid = header.kid.ok_or_else(|| {
                 ClientError::NotFound("kid not found in token header".to_string())
             })?;
             let domain = config.domain.as_str();
-            let jwks: JwkSet = Client::new()
+            let jwks: JwkSet = awc::Client::new()
                 .get(
                     Uri::builder()
                         .scheme("https")
@@ -120,9 +133,11 @@ impl FromRequest for Claims {
                         .unwrap(),
                 )
                 .send()
-                .await?
+                .await
+                .map_err(ClientError::RequestJwksError)?
                 .json()
-                .await?;
+                .await
+                .map_err(ClientError::ParseJwksError)?;
             let jwk = jwks
                 .find(&kid)
                 .ok_or_else(|| ClientError::NotFound("No JWK found for kid".to_string()))?;
@@ -130,7 +145,7 @@ impl FromRequest for Claims {
                 AlgorithmParameters::RSA(ref rsa) => {
                     let mut validation = Validation::new(Algorithm::RS256);
                     validation.set_audience(&[config.audience]);
-                    validation.set_iss(&[Uri::builder()
+                    validation.set_issuer(&[Uri::builder()
                         .scheme("https")
                         .authority(domain)
                         .path_and_query("/")
@@ -142,7 +157,7 @@ impl FromRequest for Claims {
                         decode::<Claims>(token, &key, &validation).map_err(ClientError::Decode)?;
                     Ok(token.claims)
                 }
-                algorithm => Err(ClientError::UnsupportedAlgortithm(algorithm).into()),
+                algorithm => Err(ClientError::UnsupportedAlgorithm(algorithm).into()),
             }
         })
     }

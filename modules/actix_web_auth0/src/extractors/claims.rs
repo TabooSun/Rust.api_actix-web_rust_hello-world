@@ -15,7 +15,8 @@ use jsonwebtoken::{
 };
 use serde::Deserialize;
 
-use crate::types::ErrorMessage;
+use contracts::dto::error_response_dto::ErrorResponseDto;
+use contracts::error_code::error_code::ErrorCode;
 
 #[derive(Clone, Deserialize)]
 pub struct Auth0Config {
@@ -54,40 +55,46 @@ impl ResponseError for ClientError {
 
     fn error_response(&self) -> HttpResponse {
         match self {
-            Self::Authentication(_) => HttpResponse::Unauthorized().json(ErrorMessage {
-                error: None,
+            Self::Authentication(_) => HttpResponse::Unauthorized().json(ErrorResponseDto {
+                error_code: ErrorCode::InvalidToken,
                 error_description: None,
                 message: "Requires authentication".to_string(),
+                status_code: StatusCode::UNAUTHORIZED,
             }),
-            Self::Decode(err) => HttpResponse::Unauthorized().json(ErrorMessage {
-                error: Some("invalid_token".to_string()),
+            Self::Decode(err) => HttpResponse::Unauthorized().json(ErrorResponseDto {
+                error_code: ErrorCode::InvalidToken,
                 error_description: Some(
                     format!("Authorization header value must follow this format: Bearer access-token.\n {err}"),
                 ),
                 message: "Bad credentials".to_string(),
+                status_code: StatusCode::UNAUTHORIZED,
             }),
-            Self::NotFound(msg) => HttpResponse::Unauthorized().json(ErrorMessage {
-                error: Some("invalid_token".to_string()),
+            Self::NotFound(msg) => HttpResponse::Unauthorized().json(ErrorResponseDto {
+                error_code: ErrorCode::InvalidToken,
                 error_description: Some(msg.to_string()),
                 message: "Bad credentials".to_string(),
+                status_code: StatusCode::UNAUTHORIZED,
             }),
-            Self::UnsupportedAlgorithm(alg) => HttpResponse::Unauthorized().json(ErrorMessage {
-                error: Some("invalid_token".to_string()),
+            Self::UnsupportedAlgorithm(alg) => HttpResponse::Unauthorized().json(ErrorResponseDto {
+                error_code: ErrorCode::InvalidToken,
                 error_description: Some(format!(
                     "Unsupported encryption algorithm expected RSA got {:?}",
                     alg
                 )),
                 message: "Bad credentials".to_string(),
+                status_code: StatusCode::UNAUTHORIZED,
             }),
-            ClientError::RequestJwksError(_) => HttpResponse::Unauthorized().json(ErrorMessage {
-                error: Some("invalid_token".to_string()),
+            ClientError::RequestJwksError(_) => HttpResponse::Unauthorized().json(ErrorResponseDto {
+                error_code: ErrorCode::InvalidToken,
                 error_description: Some("Failed to get jwks.json".to_string()),
                 message: "Bad credentials".to_string(),
+                status_code: StatusCode::UNAUTHORIZED,
             }),
-            ClientError::ParseJwksError(_) => HttpResponse::Unauthorized().json(ErrorMessage {
-                error: Some("invalid_token".to_string()),
+            ClientError::ParseJwksError(_) => HttpResponse::Unauthorized().json(ErrorResponseDto {
+                error_code: ErrorCode::InvalidToken,
                 error_description: Some("Failed to parse jwks.json".to_string()),
                 message: "Bad credentials".to_string(),
+                status_code: StatusCode::UNAUTHORIZED,
             }),
         }
     }

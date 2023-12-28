@@ -1,16 +1,14 @@
 use actix_web::{App, HttpServer};
-use dotenv::dotenv;
 use utoipa::OpenApi;
 use utoipa_redoc::{Redoc, Servable};
 
 mod api;
-mod extractors;
-mod types;
+mod config;
 mod middlewares;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    dotenv().ok();
+    dotenvy::dotenv().ok();
     env_logger::init();
 
     #[derive(OpenApi)]
@@ -33,8 +31,8 @@ async fn main() -> std::io::Result<()> {
     // Make instance variable of ApiDoc so all worker threads gets the same instance.
     let openapi = ApiDoc::openapi();
 
-    let config = types::Config::default();
-    let auth0_config = extractors::Auth0Config::default();
+    let config = config::Config::default();
+    let auth0_config = actix_web_auth0::extractors::Auth0Config::default();
     HttpServer::new(move || {
         App::new()
             .app_data(auth0_config.clone())
@@ -45,7 +43,7 @@ async fn main() -> std::io::Result<()> {
             .service(Redoc::with_url("/redoc", openapi.clone()))
             .service(api::routes())
     })
-    .bind((std::net::Ipv4Addr::UNSPECIFIED, config.port))?
-    .run()
-    .await
+        .bind((std::net::Ipv4Addr::UNSPECIFIED, config.port))?
+        .run()
+        .await
 }

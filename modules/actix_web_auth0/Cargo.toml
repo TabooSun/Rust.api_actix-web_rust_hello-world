@@ -1,0 +1,16 @@
+[package]
+name = "actix_web_auth0"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = { version = "4.4.1" }
+actix-web-httpauth = "0.8.1"
+jsonwebtoken = "9.2.0"
+envy = "^0.4.2"
+serde = { version = "^1.0.193", features = ["derive"] }
+thiserror = "1.0.52"
+awc = { version = "3.3.0", features = ["openssl"] }
+contracts = { path = "../../application/contracts" }

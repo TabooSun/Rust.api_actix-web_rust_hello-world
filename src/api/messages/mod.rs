@@ -1,6 +1,6 @@
 pub use self::routes::routes;
 
 pub mod handlers;
-mod routes;
+pub mod routes;
 mod types;
 

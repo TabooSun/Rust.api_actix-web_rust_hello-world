@@ -59,11 +59,10 @@ impl ResponseError for ClientError {
                 error_description: None,
                 message: "Requires authentication".to_string(),
             }),
-            Self::Decode(_) => HttpResponse::Unauthorized().json(ErrorMessage {
+            Self::Decode(err) => HttpResponse::Unauthorized().json(ErrorMessage {
                 error: Some("invalid_token".to_string()),
                 error_description: Some(
-                    "Authorization header value must follow this format: Bearer access-token"
-                        .to_string(),
+                    format!("Authorization header value must follow this format: Bearer access-token.\n {err}"),
                 ),
                 message: "Bad credentials".to_string(),
             }),

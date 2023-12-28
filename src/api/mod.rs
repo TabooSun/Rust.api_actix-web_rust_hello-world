@@ -1,4 +1,5 @@
-use super::messages;
+pub mod messages;
+
 use actix_web::{web, Scope};
 
 pub fn routes() -> Scope {

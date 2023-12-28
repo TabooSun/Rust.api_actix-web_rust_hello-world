@@ -1,7 +1,8 @@
-mod cors;
+
+mod security_headers;
 mod err_handlers;
 mod logger;
-mod security_headers;
+mod cors;
 
 pub use self::cors::cors;
 pub use self::err_handlers::err_handlers;

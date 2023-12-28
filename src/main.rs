@@ -5,8 +5,8 @@ use utoipa_redoc::{Redoc, Servable};
 
 mod api;
 mod extractors;
-mod middlewares;
 mod types;
+mod middlewares;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {

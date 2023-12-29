@@ -34,17 +34,17 @@ impl Default for Auth0Config {
 
 #[derive(Debug, thiserror::Error)]
 enum ClientError {
-    #[error("authentication")]
+    #[error("authentication: {0}")]
     Authentication(#[from] actix_web_httpauth::extractors::AuthenticationError<Bearer>),
-    #[error("decode")]
+    #[error("Decode error: {0:?}")]
     Decode(#[from] jsonwebtoken::errors::Error),
-    #[error("not_found")]
+    #[error("not_found: {0}")]
     NotFound(String),
-    #[error("unsupported_algorithm")]
+    #[error("unsupported_algorithm: {0:?}")]
     UnsupportedAlgorithm(AlgorithmParameters),
-    #[error("Get jwks.json error")]
+    #[error("Get jwks.json error: {0}")]
     RequestJwksError(awc::error::SendRequestError),
-    #[error("Parse jwks.json error")]
+    #[error("Parse jwks.json error: {0}")]
     ParseJwksError(awc::error::JsonPayloadError),
 }
 
@@ -108,6 +108,19 @@ pub struct Claims {
 impl Claims {
     pub fn validate_permissions(&self, required_permissions: &HashSet<String>) -> bool {
         self.permissions.as_ref().map_or(false, |permissions| permissions.is_superset(required_permissions))
+    }
+
+    pub fn authorize(&self, required_permissions: &HashSet<String>) -> Result<(), ErrorResponseDto> {
+        if !self.validate_permissions(required_permissions) {
+            Err(ErrorResponseDto {
+                error_code: ErrorCode::InsufficientPermissions,
+                error_description: Some("Requires read:admin-messages".to_string()),
+                message: "Permission denied".to_string(),
+                status_code: StatusCode::FORBIDDEN,
+            })
+        } else {
+            Ok(())
+        }
     }
 }
 

@@ -7,6 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/application/contracts/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/domain/shared/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/modules/actix_web_auth0/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/modules/macros/auto_log/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

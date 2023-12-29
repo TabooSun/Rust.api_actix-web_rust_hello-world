@@ -7,6 +7,13 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
+    <list default="true" id="75b48f68-a72a-4f46-a156-a91af44f869c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/actix_web_auth0/src/extractors/claims.rs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/actix_web_auth0/src/extractors/claims.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middlewares/logger.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/logger.rs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,13 +22,16 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Rust File" />
         <option value="HTTP Private Environment File" />
+        <option value="Rust File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
   </component>
   <component name="HttpClientSelectedEnvironments">
     <file url="file://$APPLICATION_CONFIG_DIR$/scratches/rest-api.http" />
@@ -29,8 +39,22 @@
   <component name="MacroExpansionManager">
     <option name="directoryName" value="pwnwdxps" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2aC60ajVBofD73X1tY1wYh181MM" />
+  <component name="ProjectViewState">
+    <option name="autoscrollToSource" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Cargo.Build `Run api_actix-web_rust_hello-world`.executor": "Run",
     "Cargo.Run api_actix-web_rust_hello-world.executor": "Run",
     "HTTP Request.rest-api | #1.executor": "Run",
     "HTTP Request.rest-api | #2.executor": "Run",
@@ -38,11 +62,24 @@
     "HTTP Request.rest-api | Get token.executor": "Run",
     "HTTP Request.rest-api | Protected.executor": "Run",
     "HTTP Request.rest-api | Public.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "learning",
     "last_opened_file_path": "/Users/taboosun/Documents/Projects/GitHub_Project/Rust/Rust.api_actix-web_rust_hello-world/modules/actix_web_auth0/src",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
-    "settings.editor.selected.configurable": "project.propVCSSupport.CommitDialog"
+    "settings.editor.selected.configurable": "project.propVCSSupport.CommitDialog",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "GitStage.ChangesTree.GroupingKeys": [
+      "directory",
+      "module",
+      "repository"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -56,7 +93,7 @@
   <component name="RsExternalLinterProjectSettings">
     <option name="runOnTheFly" value="true" />
   </component>
-  <component name="RunManager" selected="HTTP Request.rest-api | Protected">
+  <component name="RunManager" selected="HTTP Request.rest-api | Admin">
     <configuration name="Run api_actix-web_rust_hello-world" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="run --package api_actix-web_rust_hello-world --bin api_actix-web_rust_hello-world" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -88,17 +125,18 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.rest-api | Public" />
         <item itemvalue="Cargo.Run api_actix-web_rust_hello-world" />
         <item itemvalue="HTTP Request.rest-api | Protected" />
         <item itemvalue="HTTP Request.rest-api | Admin" />
         <item itemvalue="HTTP Request.rest-api | Get token" />
-        <item itemvalue="HTTP Request.rest-api | Public" />
       </list>
     </recent_temporary>
   </component>
   <component name="RustProjectSettings">
     <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task id="LOCAL-00001" summary="Restructure project">
       <option name="closed" value="true" />
@@ -124,8 +162,36 @@
       <option name="project" value="LOCAL" />
       <updated>1703752131469</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Migrate to DDD">
+      <option name="closed" value="true" />
+      <created>1703768261915</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1703768261915</updated>
+    </task>
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="75b48f68-a72a-4f46-a156-a91af44f869c" name="Changes" comment="" />
+      <created>1703809993631</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1703809993631</updated>
+      <workItem from="1703809999435" duration="4673000" />
+      <workItem from="1703851723436" duration="5312000" />
+    </task>
+    <task id="LOCAL-00005" summary="Add `auto_log`">
+      <option name="closed" value="true" />
+      <created>1703856343043</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1703856343043</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -143,7 +209,8 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Restructure project" />
     <MESSAGE value="Migrate to DDD" />
-    <option name="LAST_COMMIT_MESSAGE" value="Migrate to DDD" />
+    <MESSAGE value="Add `auto_log`" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add `auto_log`" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />

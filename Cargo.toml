@@ -4,7 +4,8 @@ members = [
     "modules/macros/authorize",
     "application/contracts",
     "domain/shared",
-    "modules/actix_web_auth0"
+    "modules/actix_web_auth0",
+    "modules/macros/auto_log",
 ]
 
 [package]
@@ -23,8 +24,11 @@ dotenvy = "0.15.7"
 envy = "0.4.2"
 env_logger = "0.10.1"
 serde = { version = "^1.0.193", features = ["derive"] }
+serde_json = "1.0.108"
 thiserror = "1.0.52"
 utoipa = { version = "4.1.0", features = ["actix_extras"] }
 utoipa-redoc = { version = "2.0.0", features = ["actix-web"] }
 contracts = { path = "application/contracts" }
 actix_web_auth0 = { path = "modules/actix_web_auth0" }
+auto_log = { path = "modules/macros/auto_log" }
+log = "0.4.20"

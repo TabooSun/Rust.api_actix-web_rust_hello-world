@@ -5,7 +5,7 @@ use proc_macro::TokenStream;
 use darling::{Error, FromMeta};
 use darling::ast::NestedMeta;
 use quote::ToTokens;
-use syn::{parse_quote, Stmt};
+use syn::parse_quote;
 
 #[derive(Debug, FromMeta)]
 struct AuthorizeArgs {

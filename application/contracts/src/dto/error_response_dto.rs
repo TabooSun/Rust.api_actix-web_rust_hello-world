@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-use actix_web::{HttpResponse, ResponseError};
+use actix_web::{HttpRequest, HttpResponse, Responder, ResponseError};
 use actix_web::body::BoxBody;
 use actix_web::http::header::ContentType;
 use actix_web::http::StatusCode;
@@ -18,6 +18,14 @@ pub struct ErrorResponseDto {
 
     #[serde(skip)]
     pub status_code: StatusCode,
+}
+
+impl Responder for ErrorResponseDto {
+    type Body = BoxBody;
+
+    fn respond_to(self, _: &HttpRequest) -> HttpResponse<Self::Body> {
+        self.error_response()
+    }
 }
 
 impl ResponseError for ErrorResponseDto {

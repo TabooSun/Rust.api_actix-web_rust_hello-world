@@ -5,10 +5,11 @@ use actix_web::body::BoxBody;
 use actix_web::http::header::ContentType;
 use actix_web::http::StatusCode;
 use serde::Serialize;
+use utoipa::{ToResponse, ToSchema};
 
 use crate::error_code::error_code::ErrorCode;
 
-#[derive(Serialize, Debug, thiserror::Error)]
+#[derive(Serialize, Debug, thiserror::Error, ToSchema, ToResponse)]
 pub struct ErrorResponseDto {
     pub error_code: ErrorCode,
     #[serde(skip_serializing_if = "Option::is_none")]

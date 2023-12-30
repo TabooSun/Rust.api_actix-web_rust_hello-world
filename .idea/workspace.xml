@@ -8,11 +8,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="75b48f68-a72a-4f46-a156-a91af44f869c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/api/api_doc.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/contracts/src/dto/error_response_dto.rs" beforeDir="false" afterPath="$PROJECT_DIR$/application/contracts/src/dto/error_response_dto.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/contracts/src/dto/message_dto.rs" beforeDir="false" afterPath="$PROJECT_DIR$/application/contracts/src/dto/message_dto.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/actix_web_auth0/src/extractors/claims.rs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/actix_web_auth0/src/extractors/claims.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middlewares/logger.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/logger.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/messages/handlers.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/messages/handlers.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +60,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Cargo.Build `Run api_actix-web_rust_hello-world`.executor": "Run",
-    "Cargo.Run api_actix-web_rust_hello-world.executor": "Run",
+    "Cargo.Expand contracts::dto::message_dto.executor": "Run",
+    "Cargo.Run api_actix-web_rust_hello-world.executor": "Debug",
     "HTTP Request.rest-api | #1.executor": "Run",
     "HTTP Request.rest-api | #2.executor": "Run",
     "HTTP Request.rest-api | Admin.executor": "Run",
@@ -71,7 +77,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
-    "settings.editor.selected.configurable": "project.propVCSSupport.CommitDialog",
+    "settings.editor.selected.configurable": "preferences.externalResources",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -93,7 +99,24 @@
   <component name="RsExternalLinterProjectSettings">
     <option name="runOnTheFly" value="true" />
   </component>
-  <component name="RunManager" selected="HTTP Request.rest-api | Admin">
+  <component name="RunManager" selected="Cargo.Run api_actix-web_rust_hello-world">
+    <configuration name="Expand contracts::dto::message_dto" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="expand --lib --color=always --theme=Dracula --tests dto::message_dto" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/application/contracts" />
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Run api_actix-web_rust_hello-world" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="run --package api_actix-web_rust_hello-world --bin api_actix-web_rust_hello-world" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -111,9 +134,6 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="rest-api | Admin" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/rest-api.http" index="2" requestIdentifier="Admin" runType="Run single request">
-      <method v="2" />
-    </configuration>
     <configuration name="rest-api | Get token" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/rest-api.http" requestIdentifier="Get token" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -125,11 +145,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.rest-api | Public" />
         <item itemvalue="Cargo.Run api_actix-web_rust_hello-world" />
-        <item itemvalue="HTTP Request.rest-api | Protected" />
-        <item itemvalue="HTTP Request.rest-api | Admin" />
         <item itemvalue="HTTP Request.rest-api | Get token" />
+        <item itemvalue="Cargo.Expand contracts::dto::message_dto" />
+        <item itemvalue="HTTP Request.rest-api | Public" />
+        <item itemvalue="HTTP Request.rest-api | Protected" />
       </list>
     </recent_temporary>
   </component>
@@ -177,7 +197,9 @@
       <option name="presentableId" value="Default" />
       <updated>1703809993631</updated>
       <workItem from="1703809999435" duration="4673000" />
-      <workItem from="1703851723436" duration="5312000" />
+      <workItem from="1703851723436" duration="8123000" />
+      <workItem from="1703930350446" duration="2046000" />
+      <workItem from="1703932418369" duration="11255000" />
     </task>
     <task id="LOCAL-00005" summary="Add `auto_log`">
       <option name="closed" value="true" />
@@ -187,7 +209,39 @@
       <option name="project" value="LOCAL" />
       <updated>1703856343043</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Add `auto_log`">
+      <option name="closed" value="true" />
+      <created>1703857094314</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1703857094314</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Add more utoipa implementations">
+      <option name="closed" value="true" />
+      <created>1703934673445</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1703934673445</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Add more utoipa implementations">
+      <option name="closed" value="true" />
+      <created>1703937189201</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1703937189202</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Add more utoipa implementations">
+      <option name="closed" value="true" />
+      <created>1703941421562</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1703941421562</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -210,9 +264,14 @@
     <MESSAGE value="Restructure project" />
     <MESSAGE value="Migrate to DDD" />
     <MESSAGE value="Add `auto_log`" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add `auto_log`" />
+    <MESSAGE value="Add more utoipa implementations" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add more utoipa implementations" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

@@ -14,3 +14,4 @@ serde = { version = "^1.0.193", features = ["derive"] }
 thiserror = "1.0.52"
 awc = { version = "3.3.0", features = ["openssl"] }
 contracts = { path = "../../application/contracts" }
+config = { path = "../../application/config" }

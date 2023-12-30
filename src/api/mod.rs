@@ -1,6 +1,8 @@
-pub mod messages;
+use actix_web::{Scope, web};
 
-use actix_web::{web, Scope};
+pub mod messages;
+pub mod api_doc;
+
 
 pub fn routes() -> Scope {
     web::scope("/api").service(messages::routes())

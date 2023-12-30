@@ -15,22 +15,9 @@ use jsonwebtoken::{
 };
 use serde::Deserialize;
 
+use config::Auth0Config;
 use contracts::dto::error_response_dto::ErrorResponseDto;
 use contracts::error_code::error_code::ErrorCode;
-
-#[derive(Clone, Deserialize)]
-pub struct Auth0Config {
-    audience: String,
-    domain: String,
-}
-
-impl Default for Auth0Config {
-    fn default() -> Self {
-        envy::prefixed("AUTH0_")
-            .from_env()
-            .expect("Provide missing environment variables for Auth0Client")
-    }
-}
 
 #[derive(Debug, thiserror::Error)]
 enum ClientError {
@@ -114,7 +101,16 @@ impl Claims {
         if !self.validate_permissions(required_permissions) {
             Err(ErrorResponseDto {
                 error_code: ErrorCode::InsufficientPermissions,
-                error_description: Some("Requires read:admin-messages".to_string()),
+                error_description: Some(
+                    format!(
+                        "Requires {permissions}",
+                        permissions = required_permissions
+                            .iter()
+                            .map(|s| s.as_ref())
+                            .collect::<Vec<&str>>()
+                            .join(","))
+                        .to_string(),
+                ),
                 message: "Permission denied".to_string(),
                 status_code: StatusCode::FORBIDDEN,
             })
